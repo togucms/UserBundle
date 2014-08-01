@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="togu.user.authentication_handler.class">Togu\UserBundle\Authentication\AuthenticationHandler</parameter>
+        <parameter key="togu.user.ajax_authentication_listener.class">Togu\UserBundle\Listener\AjaxAuthenticationListener</parameter>
+    </parameters>
+
+    <services>
+        <service id="togu.user.authentication_handler" class="%togu.user.authentication_handler.class%" public="false">
+            <argument type="service" id="router" />
+            <argument type="service" id="session" />
+        </service>
+
+        <service id="togu.user.ajax_authentication_listener" class="%togu.user.ajax_authentication_listener.class%" >
+            <tag name="kernel.event_listener" event="kernel.exception" method="onCoreException" priority="1000" />
+        </service>
+
+    </services>
+    
+</container>
